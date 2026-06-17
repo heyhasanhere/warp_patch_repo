@@ -1,0 +1,12 @@
+# Working trees produced by apply.sh and regenerate-patch.sh
+/warp/
+/.regen-warp/
+
+# Local apply.sh state
+.failure.md
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp

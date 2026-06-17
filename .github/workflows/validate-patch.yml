@@ -1,0 +1,115 @@
+name: validate-patch
+
+# Daily cron: re-apply warp.patch to the latest warp@master and run the
+# unit tests. If anything fails, open an issue so the maintainer knows
+# the patch is stale and needs a rebase.
+#
+# Manual trigger via the Actions tab → "Run workflow" is supported.
+
+on:
+  schedule:
+    # 06:00 UTC every day. Warp's master is not high-traffic; daily is
+    # frequent enough to catch a rename within a day or two.
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+    inputs:
+      warp_sha:
+        description: 'Optional: pin a specific warp commit to validate against (full 40-char SHA).'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  validate:
+    name: validate-patch-against-warp-master
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # /opt is too small on ubuntu-latest; the Warp workspace easily
+      # exceeds 20 GB of build artifacts once compiled. Use /home/runner.
+      CARGO_HOME: /home/runner/.cargo
+      CARGO_TARGET_DIR: /home/runner/warp-target
+
+    steps:
+      - name: Checkout this patch repo
+        uses: actions/checkout@v5
+
+      - name: Install Rust toolchain (stable)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo registry and Warp build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: /home/runner/warp-target -> target
+
+      - name: Install protoc (required by Warp's gRPC codegen)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends protobuf-compiler libprotobuf-dev
+          # prost-build's protoc invocation needs the well-known proto
+          # include path. libprotobuf-dev drops them in
+          # /usr/include; set PROTOC_INCLUDE so the codegen finds them.
+          echo "PROTOC_INCLUDE=/usr/include" >> "$GITHUB_ENV"
+          ls -l /usr/include/google/protobuf/descriptor.proto
+
+      - name: Clone warp@master
+        run: |
+          git clone --depth 1 https://github.com/warpdotdev/warp.git warp
+          if [[ -n "${{ inputs.warp_sha }}" ]]; then
+            git -C warp checkout --quiet "${{ inputs.warp_sha }}"
+          fi
+          echo "Resolved warp SHA: $(git -C warp rev-parse HEAD)"
+
+      - name: git apply --check (textual drift)
+        run: git -C warp apply --check "$GITHUB_WORKSPACE/warp.patch"
+
+      - name: git apply
+        run: git -C warp apply "$GITHUB_WORKSPACE/warp.patch"
+
+      - name: cargo fmt -p warp --check
+        working-directory: warp
+        run: cargo fmt -p warp --check
+
+      - name: cargo test (the semantic-drift check)
+        working-directory: warp
+        run: cargo test -p warp --lib custom_inference_modal_tests -- --nocapture
+        env:
+          # Keep target dir on the runner home volume.
+          CARGO_HOME: /home/runner/.cargo
+          CARGO_TARGET_DIR: /home/runner/warp-target
+
+      - name: Capture failure log for the issue
+        if: failure()
+        run: |
+          {
+            echo "## warp.patch no longer applies to warp@master"
+            echo ""
+            echo "**Run:** [${GITHUB_RUN_ID}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            echo "**Resolved warp SHA:** \`$(git -C warp rev-parse HEAD 2>/dev/null || echo 'unknown')\`"
+            echo "**Date:** $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo ""
+            echo "### What to do"
+            echo ""
+            echo "1. \`git clone https://github.com/warpdotdev/warp.git\` and \`git fetch warpdotdev/warp master\`."
+            echo "2. Apply \`warp.patch\` from this repo and resolve any conflicts."
+            echo "3. Run \`./scripts/regenerate-patch.sh\` to refresh \`warp.patch\`."
+            echo "4. Commit and push. The next scheduled run will re-validate."
+            echo ""
+            echo "### Last log lines"
+            echo ""
+            echo '```'
+            tail -n 80 "${GITHUB_STEP_SUMMARY:-/dev/null}" 2>/dev/null || true
+            echo '```'
+          } > failure.md
+
+      - name: Open issue on failure
+        if: failure()
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "warp.patch no longer applies to warp@master"
+          content-filepath: failure.md
+          labels: |
+            stale-patch

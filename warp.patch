@@ -1,0 +1,151 @@
+# Patch to warpdotdev/warp: allow http URLs to loopback hosts in custom AI endpoint settings
+# Base: 466d1856c1bc1824e8680ce77436691d1b4977bf (warp@master)
+# Patched: 097fbe304efa06fd07fa5376f375752e1e75475e
+# License: AGPL-3.0-or-later (inherited from warpdotdev/warp)
+#
+diff --git a/app/src/settings_view/custom_inference_modal.rs b/app/src/settings_view/custom_inference_modal.rs
+index ecd00d1..8ab27a6 100644
+--- a/app/src/settings_view/custom_inference_modal.rs
++++ b/app/src/settings_view/custom_inference_modal.rs
+@@ -895,13 +895,23 @@ fn validate_url(url: &str) -> Result<(), &'static str> {
+         return Ok(());
+     }
+     let parsed = Url::parse(url).map_err(|_| "Invalid URL")?;
+-    if parsed.scheme() != "https" {
++    // Loopback hosts (e.g. `localhost`, `127.0.0.1`, `[::1]`) are allowed to use
++    // `http` so users can point Warp at locally-running OpenAI-compatible
++    // servers such as Ollama behind a LiteLLM proxy. Non-loopback hosts still
++    // require `https`, and private / link-local / unspecified addresses are
++    // still rejected regardless of scheme.
++    let scheme_ok = match parsed.scheme() {
++        "https" => true,
++        "http" => parsed.host_str().is_some_and(is_loopback_host),
++        _ => false,
++    };
++    if !scheme_ok {
+         return Err("URL must use HTTPS");
+     }
+     let Some(host) = parsed.host_str().filter(|h| !h.is_empty()) else {
+         return Err("URL must include a host");
+     };
+-    if is_restricted_host(host) {
++    if is_restricted_host(host) && !is_loopback_host(host) {
+         return Err("URL must not use a local or private host");
+     }
+     Ok(())
+@@ -915,7 +925,7 @@ fn is_endpoint_form_valid(name: &str, url: &str, api_key: &str, has_models: bool
+         && validate_url(url).is_ok()
+ }
+ 
+-fn is_restricted_host(host: &str) -> bool {
++fn is_loopback_host(host: &str) -> bool {
+     let host = host
+         .strip_prefix('[')
+         .and_then(|host| host.strip_suffix(']'))
+@@ -923,6 +933,18 @@ fn is_restricted_host(host: &str) -> bool {
+     if host.eq_ignore_ascii_case("localhost") {
+         return true;
+     }
++    match host.parse::<IpAddr>() {
++        Ok(IpAddr::V4(ip)) => ip.is_loopback(),
++        Ok(IpAddr::V6(ip)) => ip.is_loopback(),
++        Err(_) => false,
++    }
++}
++
++fn is_restricted_host(host: &str) -> bool {
++    let host = host
++        .strip_prefix('[')
++        .and_then(|host| host.strip_suffix(']'))
++        .unwrap_or(host);
+     host.parse::<IpAddr>().is_ok_and(is_restricted_ip)
+ }
+ 
+diff --git a/app/src/settings_view/custom_inference_modal_tests.rs b/app/src/settings_view/custom_inference_modal_tests.rs
+index cad64c8..be79d9d 100644
+--- a/app/src/settings_view/custom_inference_modal_tests.rs
++++ b/app/src/settings_view/custom_inference_modal_tests.rs
+@@ -8,7 +8,7 @@ fn validate_url_accepts_https_with_host() {
+ }
+ 
+ #[test]
+-fn validate_url_rejects_http() {
++fn validate_url_rejects_http_for_non_loopback_hosts() {
+     assert_eq!(
+         validate_url("http://api.example.com/v1"),
+         Err("URL must use HTTPS")
+@@ -17,6 +17,23 @@ fn validate_url_rejects_http() {
+         validate_url("http://example.com"),
+         Err("URL must use HTTPS")
+     );
++    // RFC1918 / link-local hosts must still use HTTPS even though they are
++    // private (the http-on-LAN exception is reserved for loopback only).
++    assert_eq!(
++        validate_url("http://192.168.1.10:11434"),
++        Err("URL must use HTTPS")
++    );
++}
++
++#[test]
++fn validate_url_allows_http_for_loopback_hosts() {
++    // These URLs target locally-running OpenAI-compatible servers (e.g.
++    // Ollama behind a LiteLLM proxy) and must be accepted over plain http.
++    assert!(validate_url("http://localhost:11434").is_ok());
++    assert!(validate_url("http://LOCALHOST:11434/v1").is_ok());
++    assert!(validate_url("http://127.0.0.1:11434").is_ok());
++    assert!(validate_url("http://127.0.0.1/v1").is_ok());
++    assert!(validate_url("http://[::1]:11434").is_ok());
+ }
+ 
+ #[test]
+@@ -59,20 +76,32 @@ fn validate_url_allows_whitespace_only() {
+ #[test]
+ fn validate_url_rejects_localhost_and_private_ips() {
+     let error = Err("URL must not use a local or private host");
+-    assert_eq!(validate_url("https://localhost:8080"), error);
+-    assert_eq!(validate_url("https://127.0.0.1/v1"), error);
++    // Loopback hosts are intentionally allowed (see
++    // `validate_url_allows_loopback_hosts`); the cases below cover the
++    // non-loopback addresses that must still be rejected over https.
+     assert_eq!(validate_url("https://0.0.0.0/v1"), error);
+     assert_eq!(validate_url("https://10.0.0.1/v1"), error);
+     assert_eq!(validate_url("https://172.16.0.1/v1"), error);
+     assert_eq!(validate_url("https://192.168.0.1/v1"), error);
+     assert_eq!(validate_url("https://169.254.0.1/v1"), error);
+-    assert_eq!(validate_url("https://[::1]/v1"), error);
+     assert_eq!(validate_url("https://[::]/v1"), error);
+     assert_eq!(validate_url("https://[fc00::1]/v1"), error);
+     assert_eq!(validate_url("https://[fe80::1]/v1"), error);
+     assert_eq!(validate_url("https://[::ffff:192.168.0.1]/v1"), error);
+ }
+ 
++#[test]
++fn validate_url_allows_loopback_hosts() {
++    // Loopback hosts are accepted over both http and https so users can
++    // point Warp at locally-running OpenAI-compatible servers.
++    assert!(validate_url("http://localhost:11434").is_ok());
++    assert!(validate_url("http://127.0.0.1:11434").is_ok());
++    assert!(validate_url("http://[::1]:11434").is_ok());
++    assert!(validate_url("https://localhost:8080").is_ok());
++    assert!(validate_url("https://127.0.0.1/v1").is_ok());
++    assert!(validate_url("https://[::1]/v1").is_ok());
++}
++
+ #[test]
+ fn endpoint_form_valid_rejects_invalid_current_url() {
+     assert!(!is_endpoint_form_valid(
+@@ -98,3 +127,14 @@ fn endpoint_form_valid_accepts_complete_valid_form() {
+         true
+     ));
+ }
++
++#[test]
++fn endpoint_form_valid_accepts_loopback_http() {
++    // A local LiteLLM/Ollama proxy: the form should treat it as valid.
++    assert!(is_endpoint_form_valid(
++        "Local Ollama",
++        "http://localhost:11434",
++        "key",
++        true
++    ));
++}
