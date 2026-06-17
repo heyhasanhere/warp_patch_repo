@@ -6,8 +6,26 @@ can point Warp at locally-running OpenAI-compatible servers such as
 [Ollama](https://ollama.com) behind a [LiteLLM](https://github.com/BerriAI/litellm)
 proxy.
 
+
 ## What the patch does
 
+---
+1. warp.patch:
+A text file in unified-diff format.
+Describes changes to be made in two files inside warp's source:
+- app/src/settings_view/custom_inference_modal.rs
+        This function decides whether a URL is valid.
+        In this, `is_loopback_host` helper is added which chages `validate_url` to allow local urls.
+- app/src/settings_view/custom_inference_modal_tests.rs
+	New test file 
+	To test whether all behaviour is working properly or not.
+
+2. apply.sh	
+- given a commit-hash, downloads Warp's source code at that exact commit
+- Try to apply the patch with git apply --check first — this is a dry run. 
+	- If Warp's code has changed enough that the diff no longer lines up with the surrounding text, then it shows fail message.
+
+---
 The Custom Endpoint modal in **Settings → AI** currently rejects any URL
 that is not a public HTTPS endpoint. The patch relaxes
 `validate_url` in `app/src/settings_view/custom_inference_modal.rs` to
