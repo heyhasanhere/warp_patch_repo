@@ -1,0 +1,25 @@
+name: Update parent commit pointer
+on:
+  push:
+    branches: [main]
+jobs:
+  Update-Submodules-In-Parent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout parent repo
+        uses: actions/checkout@v4
+        with:
+          repository: heyhasanhere/warp_patch_project
+          ref: main
+          token: ${{ secrets.WARP_PARENT_REPO }}
+          submodules: true
+      - name: Update submodule to latest
+        run: |
+          git submodule update --remote warp_patch_repo
+          git diff --quiet && exit 0
+          git config user.name  "Md Rakib Hasan"
+          git config user.email "radiumcoding@gmail.com"
+          git add warp_patch_repo
+          git commit -m "Auto-update warp_patch_repo to ${{ github.sha }}"
+          git push
+
