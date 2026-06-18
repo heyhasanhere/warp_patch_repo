@@ -1,0 +1,181 @@
+{
+  "communities": {
+    "0": [
+      "cargo_fmt_command",
+      "create_issue_from_file_action",
+      "failure_md_log",
+      "git_apply_check_command",
+      "stale_patch_issue_template",
+      "validate_patch_yml_workflow"
+    ],
+    "1": [
+      "how_it_works_md_doc",
+      "readme_apply_sh",
+      "readme_custom_inference_modal_rs",
+      "readme_warp_patch"
+    ],
+    "2": [
+      "readme_custom_inference_modal_tests_rs",
+      "readme_is_loopback_host",
+      "readme_validate_url"
+    ],
+    "3": [
+      "apply",
+      "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_apply_sh__entry"
+    ],
+    "4": [
+      "cargo_test_command",
+      "semantic_drift_check_concept"
+    ],
+    "5": [
+      "init_repo",
+      "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_init_repo_sh__entry"
+    ],
+    "6": [
+      "scripts_regenerate_patch",
+      "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_scripts_regenerate_patch_sh__entry"
+    ],
+    "7": [
+      "custom_endpoint_modal_concept"
+    ],
+    "8": [
+      "readme_litellm"
+    ],
+    "9": [
+      "readme_ollama"
+    ],
+    "10": [
+      "readme_warpdotdev_warp"
+    ],
+    "11": [
+      "regenerate_patch_sh_script"
+    ]
+  },
+  "cohesion": {
+    "0": 0.3333333333333333,
+    "1": 0.5,
+    "2": 0.6666666666666666,
+    "3": 1.0,
+    "4": 1.0,
+    "5": 1.0,
+    "6": 1.0,
+    "7": 1.0,
+    "8": 1.0,
+    "9": 1.0,
+    "10": 1.0,
+    "11": 1.0
+  },
+  "gods": [
+    {
+      "id": "validate_patch_yml_workflow",
+      "label": "validate-patch workflow",
+      "degree": 6
+    },
+    {
+      "id": "readme_warp_patch",
+      "label": "warp.patch",
+      "degree": 3
+    },
+    {
+      "id": "readme_custom_inference_modal_tests_rs",
+      "label": "custom_inference_modal_tests.rs",
+      "degree": 2
+    },
+    {
+      "id": "readme_validate_url",
+      "label": "validate_url",
+      "degree": 2
+    },
+    {
+      "id": "how_it_works_md_doc",
+      "label": "How this patch repo works",
+      "degree": 2
+    },
+    {
+      "id": "cargo_test_command",
+      "label": "cargo test -p warp --lib custom_inference_modal_tests",
+      "degree": 2
+    },
+    {
+      "id": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_apply_sh__entry",
+      "label": "apply.sh script",
+      "degree": 1
+    },
+    {
+      "id": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_init_repo_sh__entry",
+      "label": "init-repo.sh script",
+      "degree": 1
+    },
+    {
+      "id": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_scripts_regenerate_patch_sh__entry",
+      "label": "regenerate-patch.sh script",
+      "degree": 1
+    },
+    {
+      "id": "readme_apply_sh",
+      "label": "apply.sh",
+      "degree": 1
+    }
+  ],
+  "surprises": [
+    {
+      "source": "validate-patch workflow",
+      "target": "cargo test -p warp --lib custom_inference_modal_tests",
+      "source_files": [
+        ".github/workflows/validate-patch.yml",
+        "README.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities; peripheral node `cargo test -p warp --lib custom_inference_modal_tests` unexpectedly reaches hub `validate-patch workflow`"
+    },
+    {
+      "source": "validate-patch workflow",
+      "target": "cargo fmt -p warp --check",
+      "source_files": [
+        ".github/workflows/validate-patch.yml",
+        "README.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `cargo fmt -p warp --check` unexpectedly reaches hub `validate-patch workflow`"
+    },
+    {
+      "source": "validate-patch workflow",
+      "target": "git apply --check",
+      "source_files": [
+        ".github/workflows/validate-patch.yml",
+        "README.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `git apply --check` unexpectedly reaches hub `validate-patch workflow`"
+    },
+    {
+      "source": "cargo test -p warp --lib custom_inference_modal_tests",
+      "target": "Semantic Drift Check",
+      "source_files": [
+        "README.md",
+        "docs/how-it-works.md"
+      ],
+      "confidence": "INFERRED",
+      "relation": "implements",
+      "why": "inferred connection - not explicitly stated in source; connects across different repos/directories"
+    },
+    {
+      "source": "How this patch repo works",
+      "target": "warp.patch",
+      "source_files": [
+        "docs/how-it-works.md",
+        "README.md"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "references",
+      "why": "connects across different repos/directories"
+    }
+  ],
+  "tokens": {
+    "input": 4883,
+    "output": 7782
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "apply.sh": {
+    "mtime": 1781693656.773386,
+    "ast_hash": "af3fd1242f2ecbf05319de520dd86817",
+    "semantic_hash": "af3fd1242f2ecbf05319de520dd86817"
+  },
+  "init-repo.sh": {
+    "mtime": 1781693656.7736235,
+    "ast_hash": "ef69f437331899b85c680b9e6550e82f",
+    "semantic_hash": "ef69f437331899b85c680b9e6550e82f"
+  },
+  "scripts/regenerate-patch.sh": {
+    "mtime": 1781693656.7737556,
+    "ast_hash": "6174c95eb44c2c03f50714929fecaffa",
+    "semantic_hash": "6174c95eb44c2c03f50714929fecaffa"
+  }
+}

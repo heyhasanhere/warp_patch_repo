@@ -1,0 +1,515 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "apply.sh",
+      "file_type": "code",
+      "source_file": "apply.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "apply",
+      "community": 3,
+      "norm_label": "apply.sh"
+    },
+    {
+      "label": "apply.sh script",
+      "file_type": "code",
+      "source_file": "apply.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_apply_sh__entry",
+      "community": 3,
+      "norm_label": "apply.sh script"
+    },
+    {
+      "label": "init-repo.sh",
+      "file_type": "code",
+      "source_file": "init-repo.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "init_repo",
+      "community": 5,
+      "norm_label": "init-repo.sh"
+    },
+    {
+      "label": "init-repo.sh script",
+      "file_type": "code",
+      "source_file": "init-repo.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_init_repo_sh__entry",
+      "community": 5,
+      "norm_label": "init-repo.sh script"
+    },
+    {
+      "label": "regenerate-patch.sh",
+      "file_type": "code",
+      "source_file": "scripts/regenerate-patch.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "scripts_regenerate_patch",
+      "community": 6,
+      "norm_label": "regenerate-patch.sh"
+    },
+    {
+      "label": "regenerate-patch.sh script",
+      "file_type": "code",
+      "source_file": "scripts/regenerate-patch.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_scripts_regenerate_patch_sh__entry",
+      "community": 6,
+      "norm_label": "regenerate-patch.sh script"
+    },
+    {
+      "label": "warpdotdev/warp",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_warpdotdev_warp",
+      "community": 10,
+      "norm_label": "warpdotdev/warp"
+    },
+    {
+      "label": "Ollama",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_ollama",
+      "community": 9,
+      "norm_label": "ollama"
+    },
+    {
+      "label": "LiteLLM",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_litellm",
+      "community": 8,
+      "norm_label": "litellm"
+    },
+    {
+      "label": "warp.patch",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_warp_patch",
+      "community": 1,
+      "norm_label": "warp.patch"
+    },
+    {
+      "label": "apply.sh",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_apply_sh",
+      "community": 1,
+      "norm_label": "apply.sh"
+    },
+    {
+      "label": "custom_inference_modal.rs",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_custom_inference_modal_rs",
+      "community": 1,
+      "norm_label": "custom_inference_modal.rs"
+    },
+    {
+      "label": "custom_inference_modal_tests.rs",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_custom_inference_modal_tests_rs",
+      "community": 2,
+      "norm_label": "custom_inference_modal_tests.rs"
+    },
+    {
+      "label": "is_loopback_host",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_is_loopback_host",
+      "community": 2,
+      "norm_label": "is_loopback_host"
+    },
+    {
+      "label": "validate_url",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "readme_validate_url",
+      "community": 2,
+      "norm_label": "validate_url"
+    },
+    {
+      "label": "validate-patch workflow",
+      "file_type": "code",
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "validate_patch_yml_workflow",
+      "community": 0,
+      "norm_label": "validate-patch workflow"
+    },
+    {
+      "label": "regenerate-patch.sh",
+      "file_type": "code",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "regenerate_patch_sh_script",
+      "community": 11,
+      "norm_label": "regenerate-patch.sh"
+    },
+    {
+      "label": "How this patch repo works",
+      "file_type": "document",
+      "source_file": "docs/how-it-works.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "how_it_works_md_doc",
+      "community": 1,
+      "norm_label": "how this patch repo works"
+    },
+    {
+      "label": "stale-patch issue template",
+      "file_type": "document",
+      "source_file": ".github/ISSUE_TEMPLATE/stale-patch.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "stale_patch_issue_template",
+      "community": 0,
+      "norm_label": "stale-patch issue template"
+    },
+    {
+      "label": "failure.md",
+      "file_type": "code",
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "failure_md_log",
+      "community": 0,
+      "norm_label": "failure.md"
+    },
+    {
+      "label": "peter-evans/create-issue-from-file@v5",
+      "file_type": "concept",
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "create_issue_from_file_action",
+      "community": 0,
+      "norm_label": "peter-evans/create-issue-from-file@v5"
+    },
+    {
+      "label": "cargo fmt -p warp --check",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cargo_fmt_command",
+      "community": 0,
+      "norm_label": "cargo fmt -p warp --check"
+    },
+    {
+      "label": "cargo test -p warp --lib custom_inference_modal_tests",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "cargo_test_command",
+      "community": 4,
+      "norm_label": "cargo test -p warp --lib custom_inference_modal_tests"
+    },
+    {
+      "label": "git apply --check",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "git_apply_check_command",
+      "community": 0,
+      "norm_label": "git apply --check"
+    },
+    {
+      "label": "Semantic Drift Check",
+      "file_type": "concept",
+      "source_file": "docs/how-it-works.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "semantic_drift_check_concept",
+      "community": 4,
+      "norm_label": "semantic drift check"
+    },
+    {
+      "label": "Custom Endpoint Modal",
+      "file_type": "concept",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "id": "custom_endpoint_modal_concept",
+      "community": 7,
+      "norm_label": "custom endpoint modal"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "apply.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "apply",
+      "target": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_apply_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "init-repo.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "init_repo",
+      "target": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_init_repo_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/regenerate-patch.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "scripts_regenerate_patch",
+      "target": "users_falcon_sand_warp_warp_patch_project_warp_patch_repo_scripts_regenerate_patch_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/how-it-works.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "how_it_works_md_doc",
+      "target": "readme_warp_patch"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_warp_patch",
+      "target": "readme_custom_inference_modal_rs"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_warp_patch",
+      "target": "readme_custom_inference_modal_tests_rs"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/how-it-works.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "how_it_works_md_doc",
+      "target": "readme_apply_sh"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_custom_inference_modal_tests_rs",
+      "target": "readme_validate_url"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_validate_url",
+      "target": "readme_is_loopback_host"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/ISSUE_TEMPLATE/stale-patch.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "stale_patch_issue_template",
+      "target": "validate_patch_yml_workflow"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "validate_patch_yml_workflow",
+      "target": "cargo_fmt_command"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "validate_patch_yml_workflow",
+      "target": "cargo_test_command"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "validate_patch_yml_workflow",
+      "target": "create_issue_from_file_action"
+    },
+    {
+      "relation": "references",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "validate_patch_yml_workflow",
+      "target": "failure_md_log"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": ".github/workflows/validate-patch.yml",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "validate_patch_yml_workflow",
+      "target": "git_apply_check_command"
+    },
+    {
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.9,
+      "source_file": "docs/how-it-works.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "cargo_test_command",
+      "target": "semantic_drift_check_concept"
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "803a3ecfbbe60220fe0a0b8cba77e309932a0858"
+}
